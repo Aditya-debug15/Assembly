@@ -61,7 +61,7 @@ movl %r12d, %r13d
 subl %r11d, %r13d
 shrl $1, %r13d
 addl %r11d, %r13d
-cmpl (%r9d,%r13d,4), %r10d
+cmpl (%r9,%r13,4), %r10d
 je .equal
 jl .less
 jg .great
