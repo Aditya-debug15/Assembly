@@ -41,11 +41,14 @@ m:
 .text
 .global main
 main:
+# %eax contains the position
+# %ebx contains the total iteration
 mov n@GOTPCREL(%rip) , %r9
 mov m@GOTPCREL(%rip) , %r10
 movl (%r10) ,%r10d
 movl $0 ,%r11d
 movl $31 ,%r12d
+movl $0, %ebx
 
 # r9-> base address of array
 # r10-> element to be searched
@@ -57,6 +60,7 @@ jge .perform
 jl .exit
 
 .perform:
+incl %ebx
 movl %r12d, %r13d
 subl %r11d, %r13d
 shrl $1, %r13d
