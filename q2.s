@@ -46,44 +46,46 @@ main:
 mov n@GOTPCREL(%rip) , %r9
 mov m@GOTPCREL(%rip) , %r10
 movl (%r10) ,%r10d
-movl $0 ,%r11d
-movl $31 ,%r12d
-movl $0, %ebx
+movl $0 ,%ebx
+movl $31 ,%eax
+movl $0, %r12d
 
 # r9-> base address of array
 # r10-> element to be searched
-# r11-> 0 low and r12-> n-1 / high
+# rbx-> 0 low and rax-> n-1 / high
+# r12-> number of iterations
+# r11 -> address
 
 .check: #begin the while loop(low<=high)
-cmpl %r11d, %r12d
+cmpl %ebx, %eax
 jge .perform
 jl .exit
 
 .perform:
-incl %ebx
-movl %r12d, %r13d
-subl %r11d, %r13d
+incl %r12d
+movl %eax, %r13d
+subl %ebx, %r13d
 shrl $1, %r13d
-addl %r11d, %r13d
+addl %ebx, %r13d
 cmpl (%r9,%r13,4), %r10d
 je .equal
 jl .less
 jg .great
 
 .equal:
-movl %r13d, %eax
+movl %r13d, %r11d
 ret
 
 .less:
 decl %r13d
-movl %r13d, %r12d
+movl %r13d, %eax
 jmp .check
 
 .great:
 incl %r13d
-movl %r13d, %r11d
+movl %r13d, %ebx
 jmp .check
 
 .exit:
-movl $-1, %eax
+movl $-1, %r11d
 ret
