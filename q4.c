@@ -3,13 +3,12 @@ void frequency(int *count_array,char *C);
 int main()
 {
     char C[35];
-    scanf("%s",C);
+    printf("Enter the string \n");
+    for(int i=0;i<32;i++)
+    {
+        scanf("%c",&C[i]);
+    }
     int count_array[26];
-    count_array[5]=4;
-    count_array[3]=4;
-    count_array[10]=4;
-    count_array[15]=4;
-    count_array[25]=4;
     frequency(count_array,C);
     for(int i=0;i<26;i++)
     {
